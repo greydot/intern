@@ -1,4 +1,4 @@
-{-# LANGUAGE MagicHash, TypeFamilies, FlexibleInstances, BangPatterns #-}
+{-# LANGUAGE CPP, MagicHash, TypeFamilies, FlexibleInstances, BangPatterns #-}
 -----------------------------------------------------------------------------
 -- |
 -- Module      :  Data.Interned.IntSet
@@ -109,7 +109,13 @@ module Data.Interned.IntSet  (
             , showTreeWith
             ) where
 
+#ifdef MIN_VERSION_GLASGOW_HASKELL
+#  if MIN_VERSION_GLASGOW_HASKELL(7,10,0,0)
+import Prelude hiding (join,lookup,filter,foldr,foldl,null,map)
+#  endif
+#else
 import Prelude hiding (lookup,filter,foldr,foldl,null,map)
+#endif
 import qualified Data.List as List
 import Data.Monoid (Monoid(..))
 import Data.Maybe (fromMaybe)
